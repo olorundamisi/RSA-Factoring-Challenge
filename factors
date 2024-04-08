@@ -62,7 +62,7 @@ def main():
     # Assert that the correct number of arguments is provided
     if len(sys.argv) != 2:
         print("Usage: factors <file>")
-        return
+        exit()
 
     file_path = sys.argv[1]   # Obtain the file path from the list of arguments
 
@@ -93,7 +93,7 @@ def main():
     end_time = time.time()  # Create timestamp at end of program
     if end_time - start_time > 5:
         print("Time Limited Exceeded (TLE)")
-        sys.exit()
+        exit()
 
 if __name__ == '__main__':
     main()

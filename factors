@@ -43,9 +43,6 @@ def rho(n):
     y = x
     d = 1
 
-    # Generating function g(x) for the next value in the sequence
-    g = g(x, n)
-
     # Pollard's rho algorithm
     while d == 1:
         x = g(x, n)

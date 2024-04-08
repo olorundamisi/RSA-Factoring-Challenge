@@ -59,11 +59,10 @@ def rho(n):
 
 
 def main():
-
     # Assert that the correct number of arguments is provided
     if len(sys.argv) != 2:
-        print("Usage: python3 factors <file>")
-        return
+        print("Usage: factors <file>")
+        exit()
 
     file_path = sys.argv[1]   # Obtain the file path from the list of arguments
 
@@ -96,7 +95,8 @@ def main():
             exit()
 
     except FileNotFoundError:
-        print(f"File '{file_path}' not found.")
+        print(f"File not found")
+        exit()
 
 
 if __name__ == '__main__':

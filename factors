@@ -49,10 +49,7 @@ def rho(n):
         y = g(g(y, n), n)
         d = math.gcd(abs(x - y), n)
 
-    if d == n:
-        return None  # Failure, try again with a different starting point
-    else:
-        return d
+    return d
 
 
 def main():
@@ -88,9 +85,11 @@ def main():
                 print(f"{n}={factor}*{n // factor}")
 
         end_time = time.time()  # Create timestamp at end of program
-        # if end_time - start_time > 5:
-            # print("Time Limited Exceeded (TLE)")
-            # exit()
+        """
+        if end_time - start_time > 5:
+            print("Time Limited Exceeded (TLE)")
+            exit()
+        """
 
     except FileNotFoundError:
         print(f"File '{file_path}' not found.")

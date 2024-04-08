@@ -90,10 +90,10 @@ def main():
             # n is not prime. Print the factors of n
             print(f"{n}={factor}*{n // factor}")
 
-    end_time = time.time()  # Create timestamp at end of program
-    if end_time - start_time > 5:
-        print("Time Limited Exceeded (TLE)")
-        sys.exit()
+        end_time = time.time()  # Create timestamp at end of program
+        if end_time - start_time > 5:
+            print("Time Limited Exceeded (TLE)")
+            sys.exit()
 
 
 if __name__ == '__main__':

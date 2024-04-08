@@ -7,7 +7,7 @@ import time
 
 def g(x, n):
     '''This function calculates the next value in a sequence based on the
-    formula for use in rho(n):
+    formula for use in Pollard's rho algorithm:
         g(x) = (x^2 + 1) % n
 
     Args:
@@ -22,9 +22,12 @@ def g(x, n):
 
 def rho(n):
     '''Pollard's rho algorithm is an algorithm for integer factorization.
-    Invented by John Pollard in 1975, it uses only a small amount of space,
+    it uses only a small amount of space,
     and its expected running time is proportional to the square root of
     the smallest prime factor of the composite number being factorized.
+
+    Invented by John Pollard in 1975, rho(n) is used to factorize a number
+    n = p * q, where p is a non-trivial factor.
 
     Takes a number n as input.
 
@@ -49,7 +52,10 @@ def rho(n):
         y = g(g(y, n), n)
         d = math.gcd(abs(x - y), n)
 
-    return d
+    if d == n:
+        return None  # Failure, try again with a different starting point
+    else:
+        return d
 
 
 def main():
@@ -85,11 +91,9 @@ def main():
                 print(f"{n}={factor}*{n // factor}")
 
         end_time = time.time()  # Create timestamp at end of program
-        """
         if end_time - start_time > 5:
             print("Time Limited Exceeded (TLE)")
             exit()
-        """
 
     except FileNotFoundError:
         print(f"File '{file_path}' not found.")

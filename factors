@@ -73,6 +73,7 @@ def main():
             numbers = file.readlines()  # Read all lines in file into a list
     except FileNotFoundError:
         print(f"File '{file_path}' not found.")
+        sys.exit()
 
     for number in numbers:
         n = int(number.strip())  # Convert number from string to integer
@@ -92,7 +93,8 @@ def main():
     end_time = time.time()  # Create timestamp at end of program
     if end_time - start_time > 5:
         print("Time Limited Exceeded (TLE)")
-        exit()
+        sys.exit()
+
 
 if __name__ == '__main__':
     main()

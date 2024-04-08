@@ -66,7 +66,7 @@ def main():
     file_path = sys.argv[1]   # Obtain the file path from the list of arguments
 
     try:
-        with open(file_path, 'r') as file:  # Open the file as read-only
+        with open(file_path, 'r') as file:    # Open the file as read-only
             numbers = file.readlines()  # Read all lines in file into a list
     except FileNotFoundError:
         print(f"File '{file_path}' not found.")

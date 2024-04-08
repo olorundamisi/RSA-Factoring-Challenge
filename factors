@@ -1,0 +1,86 @@
+#!/usr/bin/python3
+
+import math
+import sys
+import time
+
+def rho(n):
+    '''Pollard's rho algorithm is an algorithm for integer factorization.
+    Invented by John Pollard in 1975, it uses only a small amount of space,
+    and its expected running time is proportional to the square root of
+    the smallest prime factor of the composite number being factorized. 
+
+    Takes a number n as input.
+
+    Args:
+        n: input integer to be factored.
+        
+    Returns:
+        An integer. The prime factor of n, or n itself if it's prime.
+    '''
+
+    # Return 2 for trivial cases where the number is even
+    if n % 2 == 0:
+        return 2
+    
+    x = 2 # starting value
+    y = x
+    d = 1
+    
+    # Generating function g(x) for the next value in the sequence
+    g = lambda x: (x**2 + 1) % n
+    
+    # Pollard's rho algorithm
+    while d == 1:
+        x = g(x)
+        y = g(g(y))
+        d = math.gcd(abs(x - y), n)
+
+    if d == n:
+        return None  # Failure, try again with a different starting point
+    else:
+        return d
+
+def main():
+
+    # Assert that the correct number of arguments is provided
+    if len(sys.argv) != 2:
+        print("Usage: python factorize.py <file>")
+        return
+
+    file_path = sys.argv[1] # Obtain the file path from the list of arguments
+
+    start_time = time.time() # Create timestamp at begining of program
+
+    try:
+        with open(file_path, 'r') as file: # Open the file as read-only
+            numbers = file.readlines() # Read all lines in the file into a list
+
+        for number in numbers:
+            n = int(number.strip()) # Convert the number from string to integer
+
+            # Factorize the number n using Pollard's rho algorithm
+            p = rho(n)
+
+            factor = rho(n)
+
+            # If the factor is equal to the original number
+            # Then the number is prime
+            if factor == n:
+                # n is prime
+                print(f"{n} is prime.")
+            else:
+                # n is not prime
+        	    # Print the factors of n
+                print(f"{n}={factor}*{n // factor}")
+
+        end_time = time.time() # Create timestamp at end of program
+        if end_time - start_time > 5:
+            print("Time Limited Exceeded (TLE)")
+            exit()
+
+    except FileNotFoundError:
+        print(f"File '{file_path}' not found.")
+
+if __name__ == '__main__':
+    main()

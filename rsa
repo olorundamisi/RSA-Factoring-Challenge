@@ -98,10 +98,7 @@ def main():
         p = rho(n)
 
         # Keep factorizing n until a prime factor is found
-        while True:
-            if is_prime(p):
-                break
-
+        while not is_prime(p):
             p = rho(p)
 
         q = n // p

@@ -35,8 +35,6 @@ def rho(n):
         An integer. The prime factor of n, or n itself if it's prime.
     '''
 
-    return 2
-
     # Return 2 for trivial cases where the number is even
     if n % 2 == 0:
         return 2

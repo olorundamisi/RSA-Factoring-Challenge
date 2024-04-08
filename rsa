@@ -1,0 +1,113 @@
+#!/usr/bin/python3
+
+import math
+import sys
+import time
+
+def rho(n):
+    '''Pollard's rho algorithm is an algorithm for integer factorization.
+    Invented by John Pollard in 1975, it uses only a small amount of space,
+    and its expected running time is proportional to the square root of
+    the smallest prime factor of the composite number being factorized. 
+
+    Takes a number n as input.
+
+    Args:
+        n: input integer to be factored.
+        
+    Returns:
+        An integer. The prime factor of n, or n itself if it's prime.
+    '''
+
+    # Return 2 for trivial cases where the number is even
+    if n % 2 == 0:
+        return 2
+    
+    x = 2 # starting value
+    y = x
+    d = 1
+    
+    # Generating function g(x) for the next value in the sequence
+    g = lambda x: (x**2 + 1) % n
+    
+    # Pollard's rho algorithm
+    while d == 1:
+        x = g(x)
+        y = g(g(y))
+        d = math.gcd(abs(x - y), n)
+
+    if d == n:
+        return None  # Failure, try again with a different starting point
+    else:
+        return d
+
+def is_prime(n):
+    '''This function simply checks if a number is prime.
+
+    Args:
+        n: The integer to check for primality.
+
+    Returns:
+        True if n is prime, False otherwise.
+    '''
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+
+    # Optimization for numbers ending in specific digits (not prime)
+    if n % 5 == 0 or n % 7 == 0:
+        return False
+
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+
+    return True
+
+def main():
+    # Assert that the correct number of arguments is provided
+    if len(sys.argv) != 2:
+        print("Usage: python factorize.py <file>")
+        return
+
+    file_path = sys.argv[1] # Obtain the file path from the list of arguments
+
+    start_time = time.time() # Begin timing
+
+    try:
+        with open(file_path, 'r') as file: # Open the file as read-only
+            n = int(file.readline().strip()) # Read the first line as an integer
+
+        # Factorize the number n using Pollard's rho algorithm
+        p = rho(n)
+        
+        # Keep factorizing n until a prime factor is found
+        while not is_prime(p):
+            p = rho(p)
+
+        q = n // p
+
+        if p == n or q == n:
+            # n is prime
+            print(f"{n} is prime.")
+        else:
+            # n is not prime
+            # Print the prime factors of n
+            print(f"{n}={p}*{q}")
+
+        end_time = time.time() # Create timestamp at end of program
+        if end_time - start_time > 5:
+            print("Time Limited Exceeded (TLE)")
+            exit()
+    
+    except FileNotFoundError:
+        print(f"File '{file_path}' not found.")
+
+
+if __name__ == '__main__':
+    main()

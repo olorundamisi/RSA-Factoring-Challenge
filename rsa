@@ -2,7 +2,6 @@
 
 import math
 import sys
-import time
 
 
 def g(x, n):
@@ -86,41 +85,34 @@ def is_prime(n):
 def main():
     # Assert that the correct number of arguments is provided
     if len(sys.argv) != 2:
-        print("Usage: python3 rsa <file>")
+        print("Usage: rsa <file>")
         return
 
     file_path = sys.argv[1]   # Obtain the file path from the list of arguments
 
-    start_time = time.time()  # Create timestamp at begining of program
-
     try:
         with open(file_path, 'r') as file:    # Open the file as read-only
             n = int(file.readline().strip())  # Read first line as an integer
-
-        # Factorize the number n using Pollard's rho algorithm
-        p = rho(n)
-
-        # Keep factorizing n until a prime factor is found
-        while not is_prime(p):
-            p = rho(p)
-
-        q = n // p
-
-        if p == n or q == n:
-            # n is prime
-            print(f"{n} is prime.")
-        else:
-            # n is not prime
-            # Print the prime factors of n
-            print(f"{n}={p}*{q}")
-
-        end_time = time.time()  # Create timestamp at end of program
-        if end_time - start_time > 5:
-            print("Time limited exceeded")
-            exit()
-
     except FileNotFoundError:
         print(f"File '{file_path}' not found.")
+        sys.exit()
+
+    # Factorize the number n using Pollard's rho algorithm
+    p = rho(n)
+
+    # Keep factorizing n until a prime factor is found
+    while not is_prime(p):
+        p = rho(p)
+
+    q = n // p
+
+    if p == n or q == n:
+        # n is prime
+        print(f"{n} is prime.")
+    else:
+        # n is not prime
+        # Print the prime factors of n
+        print(f"{n}={p}*{q}")
 
 
 if __name__ == '__main__':

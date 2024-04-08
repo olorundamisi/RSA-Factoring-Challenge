@@ -116,7 +116,7 @@ def main():
 
         end_time = time.time()  # Create timestamp at end of program
         if end_time - start_time > 5:
-            print("Time Limited Exceeded (TLE)")
+            print("Time limited exceeded")
             exit()
 
     except FileNotFoundError:

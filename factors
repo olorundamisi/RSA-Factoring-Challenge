@@ -66,8 +66,6 @@ def main():
 
     file_path = sys.argv[1]   # Obtain the file path from the list of arguments
 
-    start_time = time.time()  # Create timestamp at begining of program
-
     try:
         with open(file_path, 'r') as file:  # Open the file as read-only
             numbers = file.readlines()  # Read all lines in file into a list
@@ -89,11 +87,6 @@ def main():
         else:
             # n is not prime. Print the factors of n
             print(f"{n}={factor}*{n // factor}")
-
-        end_time = time.time()  # Create timestamp at end of program
-        if end_time - start_time > 5:
-            print("Time Limited Exceeded (TLE)")
-            sys.exit()
 
 
 if __name__ == '__main__':

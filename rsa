@@ -87,7 +87,7 @@ def is_prime(n):
 def main():
     # Assert that the correct number of arguments is provided
     if len(sys.argv) != 2:
-        print("rsa <file>")
+        print("Usage: <file>")
         return
 
     file_path = sys.argv[1]   # Obtain the file path from the list of arguments

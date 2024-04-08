@@ -48,8 +48,8 @@ def rho(n):
 
     # Pollard's rho algorithm
     while d == 1:
-        x = g(x)
-        y = g(g(y))
+        x = g(x, n)
+        y = g(g(y, n), n)
         d = math.gcd(abs(x - y), n)
 
     if d == n:

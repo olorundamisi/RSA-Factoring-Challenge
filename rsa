@@ -24,7 +24,7 @@ def rho(n):
     '''Pollard's rho algorithm is an algorithm for integer factorization.
     Invented by John Pollard in 1975, it uses only a small amount of space,
     and its expected running time is proportional to the square root of
-    the smallest prime factor of the composite number being factorized. 
+    the smallest prime factor of the composite number being factorized.
 
     Takes a number n as input.
 
@@ -83,23 +83,24 @@ def is_prime(n):
 
     return True
 
+
 def main():
     # Assert that the correct number of arguments is provided
     if len(sys.argv) != 2:
         print("rsa <file>")
         return
 
-    file_path = sys.argv[1] # Obtain the file path from the list of arguments
+    file_path = sys.argv[1]   # Obtain the file path from the list of arguments
 
-    start_time = time.time() # Begin timing
+    start_time = time.time()  # Begin timing
 
     try:
-        with open(file_path, 'r') as file: # Open the file as read-only
-            n = int(file.readline().strip()) # Read the first line as an integer
+        with open(file_path, 'r') as file:    # Open the file as read-only
+            n = int(file.readline().strip())  # Read first line as an integer
 
         # Factorize the number n using Pollard's rho algorithm
         p = rho(n)
-        
+
         # Keep factorizing n until a prime factor is found
         while not is_prime(p):
             p = rho(p)
@@ -114,11 +115,11 @@ def main():
             # Print the prime factors of n
             print(f"{n}={p}*{q}")
 
-        end_time = time.time() # Create timestamp at end of program
+        end_time = time.time()  # Create timestamp at end of program
         if end_time - start_time > 5:
             print("Time Limited Exceeded (TLE)")
             exit()
-    
+
     except FileNotFoundError:
         print(f"File '{file_path}' not found.")
 

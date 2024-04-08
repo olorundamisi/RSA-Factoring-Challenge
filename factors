@@ -62,7 +62,7 @@ def main():
     # Assert that the correct number of arguments is provided
     if len(sys.argv) != 2:
         print("Usage: factors <file>")
-        sys.exit()
+        return
 
     file_path = sys.argv[1]   # Obtain the file path from the list of arguments
 
@@ -72,8 +72,7 @@ def main():
         with open(file_path, 'r') as file:  # Open the file as read-only
             numbers = file.readlines()  # Read all lines in file into a list
     except FileNotFoundError:
-        print(f"File not found")
-        sys.exit()
+        print(f"File '{file_path}' not found.")
 
     for number in numbers:
         n = int(number.strip())  # Convert number from string to integer
@@ -92,8 +91,8 @@ def main():
 
     end_time = time.time()  # Create timestamp at end of program
     if end_time - start_time > 5:
-        print("Time limited exceeded")
-        sys.exit()
+        print("Time Limited Exceeded (TLE)")
+        exit()
 
 if __name__ == '__main__':
     main()

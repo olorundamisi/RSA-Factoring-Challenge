@@ -4,17 +4,33 @@ import math
 import sys
 import time
 
+
+def g(x, n):
+    '''This function calculates the next value in a sequence based on the
+    formula for use in rho(n):
+        g(x) = (x^2 + 1) % n
+
+    Args:
+        x: The current value in the sequence.
+        n: The modulo value.
+
+    Returns:
+        The next value in the sequence.
+    '''
+    return (x**2 + 1) % n
+
+
 def rho(n):
     '''Pollard's rho algorithm is an algorithm for integer factorization.
     Invented by John Pollard in 1975, it uses only a small amount of space,
     and its expected running time is proportional to the square root of
-    the smallest prime factor of the composite number being factorized. 
+    the smallest prime factor of the composite number being factorized.
 
     Takes a number n as input.
 
     Args:
         n: input integer to be factored.
-        
+
     Returns:
         An integer. The prime factor of n, or n itself if it's prime.
     '''
@@ -22,14 +38,14 @@ def rho(n):
     # Return 2 for trivial cases where the number is even
     if n % 2 == 0:
         return 2
-    
-    x = 2 # starting value
+
+    x = 2  # starting value
     y = x
     d = 1
-    
+
     # Generating function g(x) for the next value in the sequence
-    g = lambda x: (x**2 + 1) % n
-    
+    g = g(x, n)
+
     # Pollard's rho algorithm
     while d == 1:
         x = g(x)
@@ -41,6 +57,7 @@ def rho(n):
     else:
         return d
 
+
 def main():
 
     # Assert that the correct number of arguments is provided
@@ -48,16 +65,16 @@ def main():
         print("Usage: python factorize.py <file>")
         return
 
-    file_path = sys.argv[1] # Obtain the file path from the list of arguments
+    file_path = sys.argv[1]   # Obtain the file path from the list of arguments
 
-    start_time = time.time() # Create timestamp at begining of program
+    start_time = time.time()  # Create timestamp at begining of program
 
     try:
-        with open(file_path, 'r') as file: # Open the file as read-only
-            numbers = file.readlines() # Read all lines in the file into a list
+        with open(file_path, 'r') as file:  # Open the file as read-only
+            numbers = file.readlines()  # Read all lines in file into a list
 
         for number in numbers:
-            n = int(number.strip()) # Convert the number from string to integer
+            n = int(number.strip())  # Convert number from string to integer
 
             # Factorize the number n using Pollard's rho algorithm
             p = rho(n)
@@ -70,17 +87,17 @@ def main():
                 # n is prime
                 print(f"{n} is prime.")
             else:
-                # n is not prime
-        	    # Print the factors of n
+                # n is not prime. Print the factors of n
                 print(f"{n}={factor}*{n // factor}")
 
-        end_time = time.time() # Create timestamp at end of program
+        end_time = time.time()  # Create timestamp at end of program
         if end_time - start_time > 5:
             print("Time Limited Exceeded (TLE)")
             exit()
 
     except FileNotFoundError:
         print(f"File '{file_path}' not found.")
+
 
 if __name__ == '__main__':
     main()

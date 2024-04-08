@@ -86,7 +86,11 @@ def main():
             print(f"{n} is prime.")
         else:
             # n is not prime. Print the factors of n
-            print(f"{n}={factor}*{n // factor}")
+            p = factor
+            q = n // p
+            if p > q:
+                p, q = q, p
+            print(f"{n}={p}*{q}")
 
 
 if __name__ == '__main__':
